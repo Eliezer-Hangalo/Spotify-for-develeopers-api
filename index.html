@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Dashboard - Spotify</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">MusicApp</div>
+            <nav>
+                <ul>
+                    <li class="active"><i class="fa-solid fa-house"></i> Browse</li>
+                    <li><i class="fa-solid fa-tower-broadcast"></i> Radio</li>
+                    <li><i class="fa-solid fa-microphone"></i> Podcasts</li>
+                    <li><i class="fa-solid fa-list"></i> Library</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="termoPesquisa" placeholder="Search for artists, songs...">
+                </div>
+            </header>
+
+            <section class="results-grid" id="listaResultados">
+                </section>
+        </main>
+
+        <footer class="player-bar">
+            <div id="player-container">
+                <p style="color: #666; font-size: 14px;">Seleciona uma música para ouvir</p>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

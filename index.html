@@ -3,20 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Dashboard - Spotify</title>
+    <title>Music Dashboard - Premium</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <aside class="sidebar">
-            <div class="logo">MusicApp</div>
+            <div class="logo">
+                <i class="fa-brands fa-spotify"></i>
+                <span class="logo-text">Music<span class="highlight">App</span></span>
+            </div>
+            
             <nav>
+                <p class="menu-label">MENU</p>
                 <ul>
-                    <li class="active"><i class="fa-solid fa-house"></i> Browse</li>
-                    <li><i class="fa-solid fa-tower-broadcast"></i> Radio</li>
-                    <li><i class="fa-solid fa-microphone"></i> Podcasts</li>
-                    <li><i class="fa-solid fa-list"></i> Library</li>
+                    <li class="nav-item active" data-type="track" data-color="#1db954">
+                        <i class="fa-solid fa-house"></i> <span>Browse</span>
+                    </li>
+                    <li class="nav-item" data-type="playlist" data-color="#8257e5">
+                        <i class="fa-solid fa-tower-broadcast"></i> <span>Radio</span>
+                    </li>
+                    <li class="nav-item" data-type="show" data-color="#ff5555">
+                        <i class="fa-solid fa-microphone"></i> <span>Podcasts</span>
+                    </li>
+                    <li class="nav-item" data-type="playlist" data-color="#3399ff">
+                        <i class="fa-solid fa-list"></i> <span>Library</span>
+                    </li>
                 </ul>
             </nav>
         </aside>
@@ -25,20 +38,30 @@
             <header class="top-bar">
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="termoPesquisa" placeholder="Search for artists, songs...">
+                    <input type="text" id="termoPesquisa" placeholder="O que queres ouvir?">
                 </div>
             </header>
 
-            <section class="results-grid" id="listaResultados">
-                </section>
+            <div class="content-header">
+                <h2 id="section-title">Trending Now</h2>
+                <div class="view-options">
+                    <i class="fa-solid fa-grid-2"></i>
+                </div>
+            </div>
+
+            <section class="results-grid" id="listaResultados"></section>
         </main>
 
         <footer class="player-bar">
             <div id="player-container">
-                <p style="color: #666; font-size: 14px;">Seleciona uma música para ouvir</p>
+                <div class="no-track">
+                    <i class="fa-solid fa-music"></i>
+                    <p>Seleciona uma música para reproduzir</p>
+                </div>
             </div>
         </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

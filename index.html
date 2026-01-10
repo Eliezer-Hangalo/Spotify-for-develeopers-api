@@ -3,65 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Dashboard - Premium</title>
+    <title>Spotify Pro - Glass Interface</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
+    <div class="app-container">
         <aside class="sidebar">
-            <div class="logo">
-                <i class="fa-brands fa-spotify"></i>
-                <span class="logo-text">Music<span class="highlight">App</span></span>
-            </div>
-            
+            <div class="logo"><i class="fa-brands fa-spotify"></i> Spotify</div>
             <nav>
-                <p class="menu-label">MENU</p>
-                <ul>
-                    <li class="nav-item active" data-type="track" data-color="#1db954">
-                        <i class="fa-solid fa-house"></i> <span>Browse</span>
-                    </li>
-                    <li class="nav-item" data-type="playlist" data-color="#8257e5">
-                        <i class="fa-solid fa-tower-broadcast"></i> <span>Radio</span>
-                    </li>
-                    <li class="nav-item" data-type="show" data-color="#ff5555">
-                        <i class="fa-solid fa-microphone"></i> <span>Podcasts</span>
-                    </li>
-                    <li class="nav-item" data-type="playlist" data-color="#3399ff">
-                        <i class="fa-solid fa-list"></i> <span>Library</span>
-                    </li>
-                </ul>
+                <div class="nav-item active" data-type="track" data-query="Top Hits">
+                    <i class="fa-solid fa-house"></i> Home
+                </div>
+                <div class="nav-item" data-type="playlist" data-query="Discover Weekly">
+                    <i class="fa-solid fa-compass"></i> Browse
+                </div>
+                <div class="nav-item" data-type="show" data-query="Podcasts">
+                    <i class="fa-solid fa-microphone"></i> Podcasts
+                </div>
+                <div class="nav-item" data-type="playlist" data-query="My Library">
+                    <i class="fa-solid fa-list-ul"></i> Your Library
+                </div>
             </nav>
+            <div class="playlists-section">
+                <p class="label">Playlists</p>
+                <div class="playlist-item active" data-type="playlist" data-query="Daily Mix 1">
+                    <i class="fa-solid fa-users"></i> Daily Mix 1
+                </div>
+                <div class="playlist-item" data-type="playlist" data-query="Liked Songs">
+                    <i class="fa-solid fa-heart"></i> Liked Songs
+                </div>
+            </div>
         </aside>
 
         <main class="main-content">
-            <header class="top-bar">
-                <div class="search-box">
+            <header class="header">
+                <div class="search-bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="termoPesquisa" placeholder="O que queres ouvir?">
+                    <input type="text" id="termoPesquisa" placeholder="Search for music, podcasts or artists...">
                 </div>
             </header>
 
-            <div class="content-header">
-                <h2 id="section-title">Trending Now</h2>
-                <div class="view-options">
-                    <i class="fa-solid fa-grid-2"></i>
-                </div>
+            <div class="genres-row">
+                <button class="genre-pill active">Pop</button>
+                <button class="genre-pill">Rock</button>
+                <button class="genre-pill">Electronic</button>
+                <button class="genre-pill">Hip Hop</button>
+                <button class="genre-pill">Jazz</button>
             </div>
 
-            <section class="results-grid" id="listaResultados"></section>
+            <div class="results-grid" id="listaResultados"></div>
+
+            <footer class="player-floating">
+                <div id="player-container">
+                    <p class="placeholder">Select a track to play</p>
+                </div>
+            </footer>
         </main>
-
-        <footer class="player-bar">
-            <div id="player-container">
-                <div class="no-track">
-                    <i class="fa-solid fa-music"></i>
-                    <p>Seleciona uma música para reproduzir</p>
-                </div>
-            </div>
-        </footer>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

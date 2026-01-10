@@ -2,33 +2,25 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music App</title>
+    <title>Music App Pro</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="app-container">
         <aside class="sidebar">
-            <div class="logo">✦ Music <span class="highlight">App</span></div>
-            <nav>
-                <div class="nav-item active" data-type="track" data-query="Top Hits"><i class="fa-solid fa-house"></i> Home</div>
-                <div class="nav-item" data-type="show" data-query="Podcasts"><i class="fa-solid fa-microphone"></i> Podcasts</div>
-                <div class="nav-item" data-type="playlist" data-query="Library"><i class="fa-solid fa-list-ul"></i> Library</div>
+            <div class="logo">✦ Music App</div>
+            <nav id="menu">
+                <div class="nav-item active" data-type="track" data-query="Top Global">Home</div>
+                <div class="nav-item" data-type="show" data-query="Podcasts Brasil">Podcasts</div>
+                <div class="nav-item" data-type="playlist" data-query="Library">Library</div>
             </nav>
         </aside>
         <main class="main-content">
-            <div class="search-bar">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="termoPesquisa" placeholder="Pesquisar no Music App...">
-            </div>
-            <div class="genres-row">
-                <button class="genre-pill active">Pop</button>
-                <button class="genre-pill">Rock</button>
-                <button class="genre-pill">Jazz</button>
-            </div>
             <div class="results-grid" id="listaResultados"></div>
-            <footer class="player-floating"><div id="player-container"></div></footer>
+            <footer class="player-floating" id="player-container">
+                <p style="text-align:center; color:#777;">Seleciona uma música</p>
+            </footer>
         </main>
     </div>
     <script src="script.js"></script>

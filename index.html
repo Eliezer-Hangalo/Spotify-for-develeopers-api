@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>Music App - Pro Dashboard</title>
+    <title>Music App Pro - Playlist Creator</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -10,25 +10,33 @@
     <div class="app-container">
         <aside class="sidebar">
             <div class="logo">✦ Music App</div>
-            <nav>
-                <div class="nav-item active" data-type="track" data-query="Top Hits Global"><i class="fa-solid fa-house"></i> Home</div>
+            <nav id="sidebar-nav">
+                <div class="nav-item active" data-type="track" data-query="Top Hits"><i class="fa-solid fa-house"></i> Home</div>
                 <div class="nav-item" data-type="show" data-query="Podcasts"><i class="fa-solid fa-microphone"></i> Podcasts</div>
-                <div class="nav-item" data-type="playlist" data-query="Library"><i class="fa-solid fa-bookmark"></i> Library</div>
+                
+                <p class="section-label">A tua Library</p>
+                <div class="nav-item" data-type="playlist" data-query="Top 2026"><i class="fa-solid fa-fire"></i> Mais Ouvidas</div>
+                <div class="nav-item" data-type="playlist" data-query="Nostalgia"><i class="fa-solid fa-clock-rotate-left"></i> Máquina do Tempo</div>
+                
+                <div class="create-playlist" onclick="criarPlaylist()">
+                    <i class="fa-solid fa-plus"></i> Criar Playlist
+                </div>
+                <div id="minhas-playlists-list">
+                    </div>
             </nav>
         </aside>
 
         <main class="main-content">
-            <div class="search-container">
-                <div class="search-bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="termoPesquisa" placeholder="Pesquisar artistas, músicas...">
-                </div>
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="termoPesquisa" placeholder="Pesquisar músicas para a tua playlist...">
             </div>
 
+            <h2 id="section-title">Sugestões</h2>
             <div class="results-grid" id="listaResultados"></div>
 
             <footer class="player-floating" id="player-container">
-                <p style="text-align:center; color:#555; margin:20px;">✦ Seleciona uma faixa no Music App</p>
+                <p style="text-align:center; color:#555;">✦ Music App - Seleciona uma faixa</p>
             </footer>
         </main>
     </div>

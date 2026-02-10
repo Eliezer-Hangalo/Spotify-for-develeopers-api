@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music App - Premium Dashboard</title>
+    <title>Music App Pro - Ultimate Edition</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -12,20 +12,13 @@
         <aside class="sidebar">
             <div class="logo">✦ Music <span class="highlight">App</span></div>
             <nav id="sidebar-nav">
-                <div class="nav-item active" data-type="track" data-query="Top Hits Global">
-                    <i class="fa-solid fa-house"></i> Home
-                </div>
-                <div class="nav-item" data-type="show" data-query="Podcasts">
-                    <i class="fa-solid fa-microphone"></i> Podcasts
-                </div>
+                <div class="nav-item active" data-type="track" data-query="Top Global Hits"><i class="fa-solid fa-house"></i> Home</div>
+                <div class="nav-item" data-type="show" data-query="Podcasts"><i class="fa-solid fa-microphone"></i> Podcasts</div>
                 
-                <p class="section-label">A tua Library</p>
-                <div class="nav-item" id="btn-mais-ouvidas">
-                    <i class="fa-solid fa-fire"></i> Mais Ouvidas
-                </div>
-                <div class="nav-item" id="btn-historico">
-                    <i class="fa-solid fa-clock-rotate-left"></i> Máquina do Tempo
-                </div>
+                <p class="section-label">A tua Inteligência</p>
+                <div class="nav-item" id="btn-mais-ouvidas"><i class="fa-solid fa-bolt"></i> Mais Ouvidas</div>
+                <div class="nav-item" id="btn-historico"><i class="fa-solid fa-clock-rotate-left"></i> Máquina do Tempo</div>
+                <div class="nav-item" id="btn-favoritos"><i class="fa-solid fa-heart"></i> Músicas Favoritas</div>
                 
                 <p class="section-label">Playlists <span onclick="criarPlaylist()" class="add-pl-btn">+ Nova</span></p>
                 <div id="minhas-playlists-list"></div>
@@ -36,18 +29,28 @@
             <header class="header-main">
                 <div class="search-bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="termoPesquisa" placeholder="O que queres ouvir?">
+                    <input type="text" id="termoPesquisa" placeholder="Pesquisar no universo Music App...">
+                </div>
+                <div class="user-profile">
+                    <div class="status-dot"></div>
+                    <span>Premium User</span>
                 </div>
             </header>
 
-            <h2 id="section-title">Sugestões para ti</h2>
+            <div class="filter-row">
+                <button class="filter-chip active" onclick="search('Top Hits')">Tudo</button>
+                <button class="filter-chip" onclick="search('Rock Classics')">Rock</button>
+                <button class="filter-chip" onclick="search('Techno 2026')">Dance</button>
+                <button class="filter-chip" onclick="search('Lofi Study')">Foco</button>
+            </div>
+
+            <h2 id="section-title">Sugestões exclusivas</h2>
             <div class="results-grid" id="listaResultados"></div>
 
             <footer class="player-floating">
-                <div id="player-container">
-                    <div class="player-placeholder">
-                        <i class="fa-solid fa-circle-play"></i>
-                        <span>Seleciona uma música para ouvir no Music App</span>
+                <div class="player-controls">
+                    <div id="player-container">
+                        <div class="player-placeholder">✦ Music App Ready</div>
                     </div>
                 </div>
             </footer>

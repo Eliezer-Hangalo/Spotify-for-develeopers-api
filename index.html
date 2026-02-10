@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music App - Premium</title>
+    <title>Music App - Premium Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -12,7 +12,7 @@
         <aside class="sidebar">
             <div class="logo">✦ Music <span class="highlight">App</span></div>
             <nav id="sidebar-nav">
-                <div class="nav-item active" data-type="track" data-query="Top Global Hits">
+                <div class="nav-item active" data-type="track" data-query="Top Hits Global">
                     <i class="fa-solid fa-house"></i> Home
                 </div>
                 <div class="nav-item" data-type="show" data-query="Podcasts">
@@ -33,17 +33,22 @@
         </aside>
 
         <main class="main-content">
-            <div class="search-bar">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="termoPesquisa" placeholder="Pesquisar artistas ou músicas...">
-            </div>
+            <header class="header-main">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="termoPesquisa" placeholder="O que queres ouvir?">
+                </div>
+            </header>
 
             <h2 id="section-title">Sugestões para ti</h2>
             <div class="results-grid" id="listaResultados"></div>
 
             <footer class="player-floating">
                 <div id="player-container">
-                    <p class="player-placeholder">✦ Music App - Seleciona uma faixa</p>
+                    <div class="player-placeholder">
+                        <i class="fa-solid fa-circle-play"></i>
+                        <span>Seleciona uma música para ouvir no Music App</span>
+                    </div>
                 </div>
             </footer>
         </main>

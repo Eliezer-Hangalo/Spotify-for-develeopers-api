@@ -1,26 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
     carregarPlaylists();
-    search('Top Hits Portugal'); // Carga inicial
+    search('Top Portugal');
 });
 
-// MEMÓRIA LOCAL: Máquina do Tempo e Mais Ouvidas
-function saveToHistory(item, type) {
+// --- SISTEMA DE MEMÓRIA AVANÇADA ---
+function updateIntelligence(item, type) {
     let history = JSON.parse(localStorage.getItem('ma_history')) || [];
     let stats = JSON.parse(localStorage.getItem('ma_stats')) || {};
 
-    // 1. Atualiza Máquina do Tempo (sem duplicados)
+    // Máquina do Tempo
     history = history.filter(i => i.id !== item.id);
     history.unshift({ ...item, type });
-    if (history.length > 20) history.pop();
+    if (history.length > 25) history.pop();
     localStorage.setItem('ma_history', JSON.stringify(history));
 
-    // 2. Atualiza Mais Ouvidas (contador)
-    stats[item.id] = { 
-        count: (stats[item.id]?.count || 0) + 1, 
-        data: item, 
-        type: type 
-    };
+    // Mais Ouvidas
+    stats[item.id] = { count: (stats[item.id]?.count || 0) + 1, data: item, type: type };
     localStorage.setItem('ma_stats', JSON.stringify(stats));
+}
+
+// --- FAVORITOS (LIKES) ---
+function toggleLike(e, id, data) {
+    e.stopPropagation();
+    let favs = JSON.parse(localStorage.getItem('ma_favs')) || [];
+    const index = favs.findIndex(f => f.id === id);
+    
+    if (index > -1) {
+        favs.splice(index, 1);
+        e.target.classList.replace('fa-solid', 'fa-regular');
+        e.target.style.color = 'white';
+    } else {
+        favs.push(data);
+        e.target.classList.replace('fa-regular', 'fa-solid');
+        e.target.style.color = '#1db954';
+    }
+    localStorage.setItem('ma_favs', JSON.stringify(favs));
 }
 
 async function search(query, type = 'track', forceItems = null) {
@@ -28,42 +42,64 @@ async function search(query, type = 'track', forceItems = null) {
     let items = forceItems;
 
     if (!items) {
-        try {
-            const resT = await fetch('/api/get-token');
-            const { access_token } = await resT.json();
-            const res = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=${type}&limit=18`, {
-                headers: { Authorization: 'Bearer ' + access_token }
-            });
-            const data = await res.json();
-            items = data.tracks?.items || data.playlists?.items || data.shows?.items || [];
-        } catch (e) {
-            grid.innerHTML = '<p style="padding:20px;">Erro ao ligar ao servidor de música.</p>';
-            return;
-        }
+        const resT = await fetch('/api/get-token');
+        const { access_token } = await resT.json();
+        const res = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=${type}&limit=20`, {
+            headers: { Authorization: 'Bearer ' + access_token }
+        });
+        const data = await res.json();
+        items = data.tracks?.items || data.playlists?.items || data.shows?.items || [];
     }
 
-    grid.innerHTML = items.map(item => `
-        <div class="music-card" onclick="play('${item.id}', '${item.type || type}', ${JSON.stringify(item).replace(/"/g, '&quot;')})">
-            <img src="${item.images?.[0]?.url || item.album?.images?.[0]?.url || 'https://via.placeholder.com/300'}">
-            <h4>${item.name}</h4>
-            <p>${item.artists?.[0]?.name || 'Music App Collection'}</p>
-        </div>
-    `).join('');
+    const favs = JSON.parse(localStorage.getItem('ma_favs')) || [];
+
+    grid.innerHTML = items.map(item => {
+        const isLiked = favs.some(f => f.id === item.id);
+        const img = item.images?.[0]?.url || item.album?.images?.[0]?.url || 'https://via.placeholder.com/300';
+        
+        return `
+            <div class="music-card" onclick="play('${item.id}', '${item.type || type}', ${JSON.stringify(item).replace(/"/g, '"')})">
+                <div class="card-action-bar">
+                    <i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart like-btn" 
+                       onclick="toggleLike(event, '${item.id}', ${JSON.stringify(item).replace(/"/g, '"')})"
+                       style="color: ${isLiked ? '#1db954' : 'white'}"></i>
+                </div>
+                <img src="${img}">
+                <h4>${item.name}</h4>
+                <p>${item.artists?.[0]?.name || 'Music App'}</p>
+            </div>
+        `;
+    }).join('');
 }
 
 function play(id, type, rawData) {
-    saveToHistory(rawData, type);
-    const embedType = type === 'show' ? 'episode' : (type === 'playlist' ? 'playlist' : 'track');
-    const container = document.getElementById('player-container');
-    
-    container.innerHTML = `
-        <iframe src="https://open.spotify.com/embed/${embedType}/${id}?utm_source=generator&theme=0" 
-            width="100%" height="80" frameBorder="0" allow="autoplay; encrypted-media;" 
-            style="border-radius:20px;"></iframe>
-    `;
+    updateIntelligence(rawData, type);
+    const eType = type === 'show' ? 'episode' : (type === 'playlist' ? 'playlist' : 'track');
+    document.getElementById('player-container').innerHTML = 
+    `<iframe src="https://open.spotify.com/embed/${eType}/${id}?utm_source=generator&theme=0" 
+        width="100%" height="80" frameBorder="0" allow="autoplay; encrypted-media;" style="border-radius:15px;"></iframe>`;
 }
 
-// GESTÃO DE PLAYLISTS
+// --- GESTÃO DE LIBRARY E BOTÕES ---
+document.getElementById('btn-mais-ouvidas').onclick = () => {
+    const stats = JSON.parse(localStorage.getItem('ma_stats')) || {};
+    const sorted = Object.values(stats).sort((a,b) => b.count - a.count).map(s => s.data);
+    search('', '', sorted);
+    document.getElementById('section-title').innerText = "As Tuas Mais Ouvidas";
+};
+
+document.getElementById('btn-favoritos').onclick = () => {
+    const favs = JSON.parse(localStorage.getItem('ma_favs')) || [];
+    search('', '', favs);
+    document.getElementById('section-title').innerText = "Músicas Favoritas";
+};
+
+document.getElementById('btn-historico').onclick = () => {
+    const history = JSON.parse(localStorage.getItem('ma_history')) || [];
+    search('', '', history);
+    document.getElementById('section-title').innerText = "Máquina do Tempo";
+};
+
 function criarPlaylist() {
     const nome = prompt("Nome da Playlist:");
     if (nome) {
@@ -79,7 +115,7 @@ function carregarPlaylists() {
     const pl = JSON.parse(localStorage.getItem('ma_playlists')) || [];
     list.innerHTML = pl.map((n, i) => `
         <div class="user-playlist-item" onclick="search('${n}', 'playlist')">
-            <span><i class="fa-solid fa-music" style="font-size:10px; margin-right:10px;"></i> ${n}</span>
+            <span><i class="fa-solid fa-music"></i> ${n}</span>
             <i class="fa-solid fa-trash trash-btn" onclick="deletePlaylist(${i}, event)"></i>
         </div>
     `).join('');
@@ -93,45 +129,6 @@ function deletePlaylist(index, e) {
     carregarPlaylists();
 }
 
-// BOTÕES DE LIBRARY (Mais Ouvidas e Histórico)
-document.getElementById('btn-mais-ouvidas').onclick = function() {
-    const stats = JSON.parse(localStorage.getItem('ma_stats')) || {};
-    const sorted = Object.values(stats)
-        .sort((a,b) => b.count - a.count)
-        .map(s => s.data);
-    
-    toggleActive(this);
-    document.getElementById('section-title').innerText = "As Tuas Mais Ouvidas";
-    search('', '', sorted);
-};
-
-document.getElementById('btn-historico').onclick = function() {
-    const history = JSON.parse(localStorage.getItem('ma_history')) || [];
-    
-    toggleActive(this);
-    document.getElementById('section-title').innerText = "Máquina do Tempo (Histórico)";
-    search('', '', history);
-};
-
-function toggleActive(element) {
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    element.classList.add('active');
-}
-
-// EVENTOS DE PESQUISA E MENU
-document.querySelectorAll('.nav-item').forEach(btn => {
-    if(!btn.id) { // Só para itens normais de pesquisa
-        btn.onclick = () => {
-            toggleActive(btn);
-            document.getElementById('section-title').innerText = btn.innerText;
-            search(btn.dataset.query, btn.dataset.type);
-        };
-    }
-});
-
 document.getElementById('termoPesquisa').onkeypress = (e) => {
-    if(e.key === 'Enter') {
-        document.getElementById('section-title').innerText = "Resultados";
-        search(e.target.value);
-    }
+    if(e.key === 'Enter') search(e.target.value);
 };
